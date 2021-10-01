@@ -3,6 +3,10 @@ package com.example.lab2.data;
 import java.util.UUID;
 
 public class Thing {
+    private UUID id = UUID.randomUUID();
+    private String name;
+    private Keyword[] keywords;
+
     public UUID getId() {
         return id;
     }
@@ -10,10 +14,6 @@ public class Thing {
     public void setId(UUID id) {
         this.id = id;
     }
-
-    private UUID id = UUID.randomUUID();
-    private String name;
-    private Keyword[] keywords;
 
     public Thing(String name, Keyword[] keywords) {
         this.name = name;

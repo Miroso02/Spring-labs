@@ -5,10 +5,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ThingDescription {
-    UUID thingId;
-    String description;
-    Date foundDate;
-    boolean wasReturned;
+    private UUID thingId;
+    private String name;
+    private String description;
+    private Date foundDate;
+    private boolean wasReturned;
+
+    public ThingDescription(UUID thingId, String name, String description, Date foundDate, boolean wasReturned) {
+        this.thingId = thingId;
+        this.name = name;
+        this.description = description;
+        this.foundDate = foundDate;
+        this.wasReturned = wasReturned;
+    }
+
+    public UUID getThingId() {
+        return thingId;
+    }
+
+    public void setThingId(UUID thingId) {
+        this.thingId = thingId;
+    }
 
     public String getDescription() {
         return description;
@@ -54,5 +71,13 @@ public class ThingDescription {
     @Override
     public int hashCode() {
         return Objects.hash(description, foundDate, wasReturned);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
