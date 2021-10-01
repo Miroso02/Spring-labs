@@ -9,12 +9,12 @@ public class InfoController
     @GetMapping ("/mirosoInfo")
     public String mirosoButton()
     {
-        return "mirosoInfo.html";
+        return "mirosoInfo";
     }
 
     @GetMapping("/leohostnameInfo")
     public String leoButton()
     {
-        return "leohostnameInfo.html";
+        return "leohostnameInfo";
     }
 }
