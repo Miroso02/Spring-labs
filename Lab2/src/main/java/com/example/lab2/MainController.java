@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.websocket.server.PathParam;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class MainController {
@@ -22,12 +26,30 @@ public class MainController {
     ThingRepository repository;
 
     @GetMapping("/")
-    public String getAllThings(Model model) {
-        model.addAttribute("things", repository.getAllThings());
+    public String getAllThings(@PathParam("keywords") String keywords, Model model) {
+        List<Thing> things;
+        if (keywords == null || keywords.isEmpty()) {
+            things = repository.getAllThings();
+        }
+        else {
+            List<Keyword> keywords1 = Stream.of(keywords.split(","))
+                    .map(Keyword::new)
+                    .collect(Collectors.toList());
+            things = repository.findThingsByKeywords(keywords1);
+        }
+        model.addAttribute("things", things);
         return "thing_list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/search")
+    public String searchThings(@PathParam("keywords") String keywords, Model model) {
+        List<Keyword> keywords1 = Stream.of(keywords.split(",")).map(Keyword::new).collect(Collectors.toList());
+        List<Thing> things = repository.findThingsByKeywords(keywords1);
+        model.addAttribute("things", things);
+        return "thing_list";
+    }
+
+    @GetMapping("/thing/{id}")
     public String getThingInfo(Model model, @PathVariable String id) {
         ThingDescription description = repository.getThingDescription(UUID.fromString(id));
         model.addAttribute("description", description);

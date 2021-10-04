@@ -6,6 +6,13 @@
 </head>
 <body>
 <a href="/addThing"><button>Add new thing</button></a>
+<form action="">
+    Search:
+    <label>
+        <input name="keywords" id="keywords">
+    </label>
+    <button>Ok</button>
+</form>
 <table>
     <thead>
     <tr>
@@ -16,7 +23,7 @@
     <tbody>
     <tr th:each="thing : ${things}">
         <td>
-            <a th:href="@{'/'+${thing.id.toString()}}" th:text="${thing.name}"></a>
+            <a th:href="@{'/thing/'+${thing.id.toString()}}" th:text="${thing.name}"></a>
         </td>
         <td>
             <span th:each="key : ${thing.keywords}">

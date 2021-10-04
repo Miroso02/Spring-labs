@@ -55,12 +55,6 @@ public class ThingRepository {
         return things;
     }
 
-    public List<Thing> findThingByKeywords(Keyword[] keywords) {
-        return things.stream()
-                .filter(thing -> List.of(thing.getKeywords()).containsAll(List.of(keywords)))
-                .collect(Collectors.toList());
-    }
-
     public ThingDescription getThingDescription(UUID id) {
         Optional<ThingDescription> optional = descriptions.stream()
                 .filter(thing -> thing.getThingId().equals(id))
@@ -71,5 +65,11 @@ public class ThingRepository {
     public void addThing(Thing thing, ThingDescription description) {
         things.add(thing);
         descriptions.add(description);
+    }
+
+    public List<Thing> findThingsByKeywords(List<Keyword> keywords) {
+        return things.stream()
+                .filter(thing -> List.of(thing.getKeywords()).containsAll(keywords))
+                .collect(Collectors.toList());
     }
 }
