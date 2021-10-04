@@ -4,6 +4,12 @@ import java.util.UUID;
 
 public class Thing {
     private UUID id = UUID.randomUUID();
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    private final UUID userId;
     private String name;
     private Keyword[] keywords;
 
@@ -15,7 +21,8 @@ public class Thing {
         this.id = id;
     }
 
-    public Thing(String name, Keyword[] keywords) {
+    public Thing(UUID userId, String name, Keyword[] keywords) {
+        this.userId = userId;
         this.name = name;
         this.keywords = keywords;
     }

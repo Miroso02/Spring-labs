@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Who are you</title>
+</head>
+<body>
+    <ul th:each="user : ${users}">
+        <li><a th:text="${user.name}" th:href="'/list?userId='+${user.id}"></a></li>
+    </ul>
+</body>
+</html>

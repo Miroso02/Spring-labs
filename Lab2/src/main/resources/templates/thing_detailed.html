@@ -21,5 +21,8 @@
     </tr>
     </tbody>
 </table>
+<h4>Contact information:</h4>
+<div th:text="'Email: ' + ${contactInfo.getEmail()}"></div>
+<div th:text="'Phone: ' + ${contactInfo.getTelephone()}"></div>
 </body>
 </html>
