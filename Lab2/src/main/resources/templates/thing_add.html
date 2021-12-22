@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new thing</title>
+</head>
+<body>
+<form action="/list">
+    <p>
+        Name:
+        <label>
+            <input type="search" id="name">
+        </label>
+    </p>
+    <p>
+        Description:
+        <label>
+            <input type="search" id="desc">
+        </label>
+    </p>
+    <p>
+        Keywords:
+        <label>
+            <input type="search" id="keywords">
+        </label>
+    </p>
+    <button onclick="addThing()">Submit</button>
+</form>
+<script>
+    async function addThing() {
+        const thingName = document.getElementById('name').value
+        const thingDesc = document.getElementById('desc').value
+        const keywords = document.getElementById('keywords').value.split(',')
+        await fetch('http://localhost:8080/addThing', {
+            method: 'POST',
+            body: JSON.stringify({name: thingName, description: thingDesc, keywords: keywords}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+</script>
+</body>
+</html>
