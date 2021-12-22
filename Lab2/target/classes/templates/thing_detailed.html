@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detailed info</title>
+</head>
+<body>
+<table>
+    <tbody>
+    <tr>
+        <td>Name:</td>
+        <td><span th:text="${description.getName()}"></span></td>
+    </tr>
+    <tr>
+        <td>Description:</td>
+        <td><span th:text="${description.getDescription()}"></span></td>
+    </tr>
+    <tr>
+        <td>Found date:</td>
+        <td><span th:text="${description.getFoundDate().toString()}"></span></td>
+    </tr>
+    </tbody>
+</table>
+<h4>Contact information:</h4>
+<div th:text="'Email: ' + ${contactInfo.getEmail()}"></div>
+<div th:text="'Phone: ' + ${contactInfo.getTelephone()}"></div>
+</body>
+</html>
