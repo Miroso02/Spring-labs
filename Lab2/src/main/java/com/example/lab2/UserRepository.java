@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public class UserRepository {
     private final ArrayList<User> users = new ArrayList<>(List.of(
-            new User(new ContactInfo("+380123123123", "m@m.m"), "User1"),
+            new User(new ContactInfo("+380123123123", ""), "User1"),
             new User(new ContactInfo("+386666666666", "test@gmail.com"), "User2")
     ));
 

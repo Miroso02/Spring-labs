@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>Description:</td>
-        <td><span th:text="${description.getDescription()}"></span></td>
+        <td><span th:text="${description.getDescription()} == '' ? 'No description' : ${description.getDescription()}"></span></td>
     </tr>
     <tr>
         <td>Found date:</td>
@@ -22,7 +22,14 @@
     </tbody>
 </table>
 <h4>Contact information:</h4>
-<div th:text="'Email: ' + ${contactInfo.getEmail()}"></div>
+<th:block th:switch="${contactInfo.getEmail()}">
+    <div th:case="''">
+        <div th:text="'Email to contact was not found'"></div>
+    </div>
+    <div th:case="*">
+        <div th:text="'Email: ' + ${contactInfo.getEmail()}"></div>
+    </div>
+</th:block>
 <div th:text="'Phone: ' + ${contactInfo.getTelephone()}"></div>
 </body>
 </html>
