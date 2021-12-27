@@ -4,10 +4,7 @@ import com.example.lab2.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.Arrays;
@@ -23,7 +20,42 @@ public class MainController {
     ThingRepository thingRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ThingTestRepository thingTestRepository;
+
     User user;
+
+    @ResponseBody
+    @GetMapping("/testMap")
+    public Thing getThing(@RequestParam int id){
+        return thingTestRepository.findById(id).orElseGet(() -> { throw new RuntimeException("no thing"); });
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/testMap", consumes = "application/json")
+    public String saveThing(@RequestBody Thing thing)
+    {
+        thingTestRepository.save(thing);
+        return "saved successfully";
+    }
+
+    @PutMapping(value = "replaceThing", consumes = "application/json")
+    public void replaceMessage(@RequestParam int id, @RequestBody Thing thing)
+    {
+        Thing newThing = new Thing();
+        newThing.setId(id);
+        newThing.setName(thing.getName());
+        newThing.setKeywordLine(thing.getKeywordLine());
+
+        thingTestRepository.deleteById(id);
+        thingTestRepository.save(newThing);
+    }
+
+    @DeleteMapping("/deleteById")
+    public void deleteThing(@RequestParam int id)
+    {
+        thingTestRepository.deleteById(id);
+    }
 
     @GetMapping("/")
     public String index(Model model) {
@@ -34,11 +66,11 @@ public class MainController {
     @GetMapping("/list")
     public String getAllThings(
             @PathParam("keywords") String keywords,
-            @PathParam("userId") String userId,
+            @PathParam("userId") UUID userId,
             Model model
     ) {
         if (userId != null) {
-            user = userRepository.getUser(UUID.fromString(userId));
+            user = userRepository.getUser(userId);
         }
         List<Thing> things;
         if (keywords == null || keywords.isEmpty()) {
@@ -56,9 +88,9 @@ public class MainController {
 
     @GetMapping("/thing/{id}")
     public String getThingInfo(Model model, @PathVariable String id) {
-        ThingDescription description = thingRepository.getThingDescription(UUID.fromString(id));
+        ThingDescription description = thingRepository.getThingDescription(Integer.parseInt(id));
         model.addAttribute("description", description);
-        Thing thing = thingRepository.getThing(UUID.fromString(id));
+        Thing thing = thingRepository.getThing(Integer.parseInt(id));
         User thingUser = userRepository.getUser(thing.getUserId());
         model.addAttribute("contactInfo", thingUser.getContactInfo());
         return "thing_detailed";

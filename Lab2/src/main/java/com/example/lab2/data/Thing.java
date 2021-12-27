@@ -1,38 +1,59 @@
 package com.example.lab2.data;
 
+
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity
+@Table(name = "things")
 public class Thing {
-    private UUID id = UUID.randomUUID();
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-    public UUID getUserId() {
-        return userId;
+    @Column(name = "userId")
+    private String userId;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "keywords")
+    private String keywordLine;
+
+
+    public Thing(UUID userId, String name, Keyword[] keywords) {
+        this.userId = String.valueOf(userId);
+        this.name = name;
+
+        for (int i = 0; i < keywords.length; i++)
+        {
+            if (i == 0)
+            {
+                this.keywordLine = "";
+                this.keywordLine += keywords[i];
+            }
+            else
+            {
+                this.keywordLine += ", " + keywords[i];
+            }
+        }
     }
 
-    private final UUID userId;
-    private String name;
-    private Keyword[] keywords;
+    public Thing() {
 
-    public UUID getId() {
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Thing(UUID userId, String name, Keyword[] keywords) {
-        this.userId = userId;
-        this.name = name;
-        this.keywords = keywords;
-    }
-
-    public Keyword[] getKeywords() {
-        return keywords;
-    }
-
-    public void setKeywords(Keyword[] keywords) {
-        this.keywords = keywords;
+    public UUID getUserId() {
+        return UUID.fromString(userId);
     }
 
     public String getName() {
@@ -41,5 +62,25 @@ public class Thing {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getKeywordLine() {
+        return keywordLine;
+    }
+
+    public void setKeywordLine(String keywordLine) {
+        this.keywordLine = keywordLine;
+    }
+
+    public Keyword[] getKeywords()
+    {
+        String[] keywordsToConvert = this.keywordLine.split(", ");
+        Keyword[] keywords = new Keyword[keywordsToConvert.length];
+
+        for (int i = 0; i < keywords.length; i++)
+        {
+            keywords[i] = new Keyword(keywordsToConvert[i]);
+        }
+        return keywords;
     }
 }

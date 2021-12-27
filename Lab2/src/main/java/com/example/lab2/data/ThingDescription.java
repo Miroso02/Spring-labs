@@ -5,13 +5,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ThingDescription {
-    private UUID thingId;
+    private int thingId;
     private String name;
     private String description;
     private Date foundDate;
     private boolean wasReturned;
 
-    public ThingDescription(UUID thingId, String name, String description, Date foundDate, boolean wasReturned) {
+    public ThingDescription(int thingId, String name, String description, Date foundDate, boolean wasReturned) {
         this.thingId = thingId;
         this.name = name;
         this.description = description;
@@ -19,11 +19,11 @@ public class ThingDescription {
         this.wasReturned = wasReturned;
     }
 
-    public UUID getThingId() {
+    public int getThingId() {
         return thingId;
     }
 
-    public void setThingId(UUID thingId) {
+    public void setThingId(int thingId) {
         this.thingId = thingId;
     }
 

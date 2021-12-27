@@ -17,14 +17,14 @@ public class ThingRepository {
         return things;
     }
 
-    public ThingDescription getThingDescription(UUID id) {
+    public ThingDescription getThingDescription(int id) {
         Optional<ThingDescription> optional = descriptions.stream()
-                .filter(thing -> thing.getThingId().equals(id))
+                .filter(thing -> thing.getThingId() == id)
                 .findFirst();
         return optional.orElse(null);
     }
-    public Thing getThing(UUID id) {
-        return things.stream().filter(thing -> thing.getId().equals(id)).findFirst().orElse(null);
+    public Thing getThing(int id) {
+        return things.stream().filter(thing -> thing.getId() == id).findFirst().orElse(null);
     }
 
     public void addThing(Thing thing, ThingDescription description) {
